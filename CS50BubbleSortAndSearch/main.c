@@ -1,6 +1,6 @@
 //
 //  main.c
-//  CS50BubbleSortAndSearch
+//  CS50SortAndSearch
 //
 //  Created by James Dylan Goldstein on 6/15/16.
 //  Copyright © 2016 James Dylan Goldstein. All rights reserved.
@@ -16,9 +16,7 @@ int main(int argc, const char * argv[])
 {
     printf("How many integers would you like sorted:");
     int sizeOfArray = GetInt();
-    int arrayOfInts[sizeOfArray + 1];
-    int bufferArrayInts[sizeOfArray + 1];
-    int lastPositionArray = sizeOfArray - 1;
+    int arrayOfInts[sizeOfArray];
     
     for (int populateCounter = 0; populateCounter < sizeOfArray; populateCounter++)
     {
@@ -27,11 +25,6 @@ int main(int argc, const char * argv[])
     }
     
     sortInts(sizeOfArray, arrayOfInts);
-
-    for (int printCounter = 0; printCounter < sizeOfArray; printCounter++)
-    {
-        printf("%i\n", arrayOfInts[printCounter]);
-    }
     
     return 0;
 }
@@ -39,73 +32,78 @@ int main(int argc, const char * argv[])
 int sortInts(int sizeOfArray, int arrayOfInts[])
 {
     int lastPositionArray = sizeOfArray - 1;
+    int smallestInt;
+    int forwardShiftCounter;
     
-    int sortCounterOne = 0;
-    int sortCounterReset = 0;
-    int startSort = 0;
-    int startSortCounter = 0;
-    int loopIterations;
-    int maxcomparisons = sizeOfArray - 2;
-    int negativeIterCounter = lastPositionArray;
-    
-    loopIterations = loopIterationsFunc(sizeOfArray);
-    
-    while(loopIterations >= 0)
+    printf("Unsorted: ");
+    for (int printCounter = 0; printCounter < sizeOfArray; printCounter++)
     {
-        
-        printf("DOING THIS LOOP %i TIMES\n", loopIterations);
-        
-        
-        if (arrayOfInts[startSort] > arrayOfInts[lastPositionArray - sortCounterOne])
-        {
-            int bufferInt = arrayOfInts[sortCounterOne];
-            arrayOfInts[sortCounterOne] = arrayOfInts[lastPositionArray - sortCounterOne];
-            arrayOfInts[lastPositionArray - sortCounterOne] = bufferInt;
-            sortCounterOne++;
-            
-            
-        }
-        sortCounterReset++;
-        sortCounterOne++;
-        startSortCounter++;
-        
-        if (negativeIterCounter == 0)
-        {
-            startSort++;
-            startSortCounter = 0;
-        }
-        else if (startSortCounter % negativeIterCounter == 0)
-        {
-            startSort++;
-            startSortCounter = 0;
-            negativeIterCounter--;
-        }
-        
-        if (maxcomparisons == 0)
-        {
-            sortCounterOne = 0;
-        }
-        else if (sortCounterOne % maxcomparisons == 0)
-        {
-            sortCounterOne = 0;
-            maxcomparisons--;
-        }
-        
-         
-        loopIterations--;
+        printf("%i ", arrayOfInts[printCounter]);
     }
+    printf("\n");
+    
+    for (int arrayCounter = 0; arrayCounter < sizeOfArray; arrayCounter++)
+    {
+        if (arrayOfInts[0] > arrayOfInts[arrayCounter + 1])
+        {
+            /*
+            // Step 1
+            // ArrayCounter = 0
+            smallestInt = arrayOfInts[arrayCounter + 1];
+            arrayOfInts[arrayCounter + 1] = arrayOfInts[arrayCounter];
+            arrayOfInts[0] = smallestInt;
+            
+            // Step 2
+            // ArrayCounter = 1
+            smallestInt = arrayOfInts[arrayCounter + 1];
+            arrayOfInts[arrayCounter + 1] = arrayOfInts[arrayCounter];
+            arrayOfInts[arrayCounter] = arrayOfInts[arrayCounter - 1];
+            arrayOfInts[0] = smallestInt;
+            
+            // Step 3
+            // ArrayCounter = 2
+            smallestInt = arrayOfInts[arrayCounter + 1];
+            arrayOfInts[arrayCounter + 1] = arrayOfInts[arrayCounter];
+            arrayOfInts[arrayCounter] = arrayOfInts[arrayCounter - 1];
+            arrayOfInts[arrayCounter - 1] = arrayOfInts[arrayCounter - 2];
+            arrayOfInts[0] = smallestInt;
+            
+            // Step 4
+            // ArrayCounter = 3
+            smallestInt = arrayOfInts[arrayCounter + 1];
+            arrayOfInts[arrayCounter + 1] = arrayOfInts[arrayCounter];
+            arrayOfInts[arrayCounter] = arrayOfInts[arrayCounter - 1];
+            arrayOfInts[arrayCounter - 1] = arrayOfInts[arrayCounter - 2];
+            arrayOfInts[arrayCounter - 2] = arrayOfInts[arrayCounter - 3];
+            arrayOfInts[0] = smallestInt;
+            */
+            
+            //WORKING
+            smallestInt = arrayOfInts[arrayCounter + 1];
+            arrayOfInts[arrayCounter + 1] = arrayOfInts[arrayCounter];
+            
+            // Shifts digits forward
+            forwardShiftCounter = 0;
+            if (arrayCounter > 0)
+            {
+                for (int whatToShiftCounter = 1; whatToShiftCounter < sizeOfArray; whatToShiftCounter++)
+                {
+                    arrayOfInts[arrayCounter + forwardShiftCounter] = arrayOfInts[arrayCounter - whatToShiftCounter];
+                    forwardShiftCounter--;
+                }
+            }
+        
+            arrayOfInts[0] = smallestInt;
+        }
+    }
+    
+    printf("Sorted: ");
+    for (int printCounter = 0; printCounter < sizeOfArray; printCounter++)
+    {
+        printf("%i ", arrayOfInts[printCounter]);
+    }
+    printf("\n");
     
     return 0;
 }
 
-int loopIterationsFunc(int sizeOfArray)
-{
-    int loopIterations = 0;
-    
-    for(int loopIterCounter = 1; loopIterCounter < sizeOfArray; loopIterCounter++)
-    {
-        loopIterations += sizeOfArray - loopIterCounter;
-    }
-    
-    return loopIterations;
-}
