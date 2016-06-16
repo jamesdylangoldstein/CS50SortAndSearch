@@ -52,13 +52,18 @@ int sortInts(int sizeOfArray, int arrayOfInts[])
     
     while(loopIterations >= 0)
     {
+        
         printf("DOING THIS LOOP %i TIMES\n", loopIterations);
+        
+        
         if (arrayOfInts[startSort] > arrayOfInts[lastPositionArray - sortCounterOne])
         {
             int bufferInt = arrayOfInts[sortCounterOne];
             arrayOfInts[sortCounterOne] = arrayOfInts[lastPositionArray - sortCounterOne];
-            arrayOfInts[lastPositionArray = sortCounterOne] = bufferInt;
+            arrayOfInts[lastPositionArray - sortCounterOne] = bufferInt;
             sortCounterOne++;
+            
+            
         }
         sortCounterReset++;
         sortCounterOne++;
@@ -66,7 +71,8 @@ int sortInts(int sizeOfArray, int arrayOfInts[])
         
         if (negativeIterCounter == 0)
         {
-            return 0;
+            startSort++;
+            startSortCounter = 0;
         }
         else if (startSortCounter % negativeIterCounter == 0)
         {
@@ -77,7 +83,7 @@ int sortInts(int sizeOfArray, int arrayOfInts[])
         
         if (maxcomparisons == 0)
         {
-            return 0;
+            sortCounterOne = 0;
         }
         else if (sortCounterOne % maxcomparisons == 0)
         {
@@ -85,6 +91,7 @@ int sortInts(int sizeOfArray, int arrayOfInts[])
             maxcomparisons--;
         }
         
+         
         loopIterations--;
     }
     
