@@ -16,7 +16,7 @@ int main(int argc, const char * argv[])
 {
     printf("How many integers would you like sorted:");
     int sizeOfArray = GetInt();
-    int arrayOfInts[sizeOfArray];
+    int arrayOfInts[sizeOfArray + 1];
     
     for (int populateCounter = 0; populateCounter < sizeOfArray; populateCounter++)
     {
@@ -25,6 +25,13 @@ int main(int argc, const char * argv[])
     }
     
     sortInts(sizeOfArray, arrayOfInts);
+    
+    printf("Sorted: ");
+    for (int printCounter = 0; printCounter < sizeOfArray; printCounter++)
+    {
+        printf("%i ", arrayOfInts[printCounter]);
+    }
+    printf("\n");
     
     return 0;
 }
@@ -36,8 +43,9 @@ int sortInts(int sizeOfArray, int arrayOfInts[])
     int forwardShiftCounter;
     int testAllDigits;
     int comparisonCounter;
-    int loopIterations = loopIterationsFunc(sizeOfArray);
+    int loopIterations = lastPositionArray;
     int lastPositionDup = lastPositionArray;
+    int testAllDigitsUppedCounter = 0;
     
     printf("Unsorted: ");
     for (int printCounter = 0; printCounter < sizeOfArray; printCounter++)
@@ -46,90 +54,50 @@ int sortInts(int sizeOfArray, int arrayOfInts[])
     }
     printf("\n");
     
-    printf("Loop iterations = %i \n", loopIterations);
-    
     testAllDigits = 0;
-    comparisonCounter = 1;
+    
+    comparisonCounter = 0;
+    
+    int startingPoint = 1;
 
     while (loopIterations > 0)
     {
-        for (int arrayCounter = testAllDigits; arrayCounter < sizeOfArray; arrayCounter++)
+        for (int arrayCounter = 0; arrayCounter < sizeOfArray; arrayCounter++)
         {
-            if (arrayOfInts[testAllDigits] > arrayOfInts[arrayCounter + 1])
+            if (arrayOfInts[testAllDigits] > arrayOfInts[testAllDigits + startingPoint])
             {
-                printf("%i COMP %i.\n", testAllDigits, arrayCounter + 1);
-                /*
-                // Step 1
-                // ArrayCounter = 0
-                smallestInt = arrayOfInts[arrayCounter + 1];
-                arrayOfInts[arrayCounter + 1] = arrayOfInts[arrayCounter];
-                arrayOfInts[0] = smallestInt;
+                printf("%i COMP %i.\n", testAllDigits, (testAllDigits + startingPoint));
+        
+                smallestInt = arrayOfInts[testAllDigits + startingPoint];
+                arrayOfInts[testAllDigits + startingPoint] = arrayOfInts[testAllDigits];
                 
-                // Step 2
-                // ArrayCounter = 1
-                smallestInt = arrayOfInts[arrayCounter + 1];
-                arrayOfInts[arrayCounter + 1] = arrayOfInts[arrayCounter];
-                arrayOfInts[arrayCounter] = arrayOfInts[arrayCounter - 1];
-                arrayOfInts[0] = smallestInt;
+                arrayOfInts[testAllDigits] = smallestInt;
                 
-                // Step 3
-                // ArrayCounter = 2
-                smallestInt = arrayOfInts[arrayCounter + 1];
-                arrayOfInts[arrayCounter + 1] = arrayOfInts[arrayCounter];
-                arrayOfInts[arrayCounter] = arrayOfInts[arrayCounter - 1];
-                arrayOfInts[arrayCounter - 1] = arrayOfInts[arrayCounter - 2];
-                arrayOfInts[0] = smallestInt;
-                
-                // Step 4
-                // ArrayCounter = 3
-                smallestInt = arrayOfInts[arrayCounter + 1];
-                arrayOfInts[arrayCounter + 1] = arrayOfInts[arrayCounter];
-                arrayOfInts[arrayCounter] = arrayOfInts[arrayCounter - 1];
-                arrayOfInts[arrayCounter - 1] = arrayOfInts[arrayCounter - 2];
-                arrayOfInts[arrayCounter - 2] = arrayOfInts[arrayCounter - 3];
-                arrayOfInts[0] = smallestInt;
-                */
-                
-                //WORKING
-                smallestInt = arrayOfInts[arrayCounter + 1];
-                arrayOfInts[arrayCounter + 1] = arrayOfInts[arrayCounter];
-                
-                // Shifts digits forward
-                forwardShiftCounter = 0;
-                if (arrayCounter > 0)
-                {
-                    for (int whatToShiftCounter = 1; whatToShiftCounter < sizeOfArray; whatToShiftCounter++)
-                    {
-                        arrayOfInts[arrayCounter + forwardShiftCounter] = arrayOfInts[arrayCounter - whatToShiftCounter];
-                        forwardShiftCounter--;
-                    }
-                }
-            
-                comparisonCounter++;
-                
-                arrayOfInts[0] = smallestInt;
-                
-                if (lastPositionDup == 0)
-                {
-                    
-                }
-                else if (comparisonCounter % lastPositionDup == 0)
-                {
-                    testAllDigits++;
-                    comparisonCounter = 1;
-                    lastPositionDup--;
-                }
+            }
+            else
+            {
+                printf("%i COMP %i.\n", testAllDigits, (testAllDigits + startingPoint));
+            }
+
+            startingPoint++;
+            comparisonCounter++;
+
+            if (testAllDigitsUppedCounter == (lastPositionArray - 1))
+            {
+                return 0;
+            }
+            else if (comparisonCounter % lastPositionDup == 0)
+            {
+                testAllDigits++;
+                comparisonCounter = 0;
+                lastPositionDup--;
+                testAllDigitsUppedCounter++;
+                startingPoint = 1;
             }
         }
         loopIterations--;
+        
     }
-    
-    printf("Sorted: ");
-    for (int printCounter = 0; printCounter < sizeOfArray; printCounter++)
-    {
-        printf("%i ", arrayOfInts[printCounter]);
-    }
-    printf("\n");
     
     return 0;
 }
