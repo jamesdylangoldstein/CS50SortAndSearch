@@ -11,6 +11,7 @@
 
 int sortInts(int sizeOfArray, int arrayOfInts[]);
 int loopIterationsFunc(int sizeOfArray);
+int searchForInt(int intToFind, int sizeOfArray, int arrayOfInts[]);
 
 int main(int argc, const char * argv[])
 {
@@ -23,6 +24,13 @@ int main(int argc, const char * argv[])
         printf("Enter int #%i:", populateCounter + 1);
         arrayOfInts[populateCounter] = GetInt();
     }
+    
+    printf("Unsorted: ");
+    for (int printCounter = 0; printCounter < sizeOfArray; printCounter++)
+    {
+        printf("%i ", arrayOfInts[printCounter]);
+    }
+    printf("\n");
     
     sortInts(sizeOfArray, arrayOfInts);
     
@@ -40,19 +48,11 @@ int sortInts(int sizeOfArray, int arrayOfInts[])
 {
     int lastPositionArray = sizeOfArray - 1;
     int smallestInt;
-    int forwardShiftCounter;
     int testAllDigits;
     int comparisonCounter;
     int loopIterations = lastPositionArray;
     int lastPositionDup = lastPositionArray;
     int testAllDigitsUppedCounter = 0;
-    
-    printf("Unsorted: ");
-    for (int printCounter = 0; printCounter < sizeOfArray; printCounter++)
-    {
-        printf("%i ", arrayOfInts[printCounter]);
-    }
-    printf("\n");
     
     testAllDigits = 0;
     
@@ -66,19 +66,12 @@ int sortInts(int sizeOfArray, int arrayOfInts[])
         {
             if (arrayOfInts[testAllDigits] > arrayOfInts[testAllDigits + startingPoint])
             {
-                printf("%i COMP %i.\n", testAllDigits, (testAllDigits + startingPoint));
-        
                 smallestInt = arrayOfInts[testAllDigits + startingPoint];
                 arrayOfInts[testAllDigits + startingPoint] = arrayOfInts[testAllDigits];
                 
                 arrayOfInts[testAllDigits] = smallestInt;
                 
             }
-            else
-            {
-                printf("%i COMP %i.\n", testAllDigits, (testAllDigits + startingPoint));
-            }
-
             startingPoint++;
             comparisonCounter++;
 
@@ -102,14 +95,8 @@ int sortInts(int sizeOfArray, int arrayOfInts[])
     return 0;
 }
 
-int loopIterationsFunc(int sizeOfArray)
+int searchForInt(int intToFind, int sizeOfArray, int arrayOfInts[])
 {
-    int loopIterations = 0;
     
-    for(int loopIterCounter = 1; loopIterCounter < sizeOfArray; loopIterCounter++)
-    {
-        loopIterations += sizeOfArray - loopIterCounter;
-    }
-    
-    return loopIterations;
+    return 0;
 }
