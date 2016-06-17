@@ -102,8 +102,6 @@ int sortInts(int sizeOfArray, int arrayOfInts[])
 int searchForInt(int intToFind, int startValue, int halfSize, int sizeOfArray, int arrayOfInts[])
 {
     halfSize = halfSize/2;
-    printf("halfSize = %i \n", halfSize);
-    printf("startValue = %i \n", startValue);
     
     if (halfSize == 0)
     {
@@ -113,17 +111,14 @@ int searchForInt(int intToFind, int startValue, int halfSize, int sizeOfArray, i
     int left = startValue + halfSize - 1;
     int right = startValue + halfSize;
     
-    printf("comparing %i to %i\n", arrayOfInts[left], arrayOfInts[right]);
     if (intToFind < arrayOfInts[left])
     {
         // Left side
-        printf("It's on the left side\n");
         searchForInt(intToFind, 0, halfSize, sizeOfArray, arrayOfInts);
     }
     else if (intToFind > arrayOfInts[right])
     {
         // Right side
-        printf("It's on the right side\n");
         searchForInt(intToFind, halfSize, halfSize, sizeOfArray, arrayOfInts);
     }
     else if (intToFind == arrayOfInts[left])
@@ -138,13 +133,6 @@ int searchForInt(int intToFind, int startValue, int halfSize, int sizeOfArray, i
         printf("%i found in position %i!\n", intToFind, startValue + halfSize + 1);
         return 0;
     }
-    
-    if (halfSize == 1)
-    {
-        printf("%i not found!\n", intToFind);
-        return 0;
-    }
-    
-    
+
     return 0;
 }
